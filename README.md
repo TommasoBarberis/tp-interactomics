@@ -36,12 +36,12 @@ Par exemple, les 100 premières interactions protéine-protéine humaines dispon
 
 Numero de champ | Signification Biologique|
  --- | --- 
-1 | 
-2 |
-3 |
-4 |
-5 |
-6 |
+1 | Unique identifier for interactor A, represented as databaseName:ac, where databaseName is the name of the corresponding database as defined in the PSI-MI controlled vocabulary, and ac is the unique primary identifier of the molecule in the database. Identifiers from multiple databases can be separated by "|". It is recommended that proteins be identified by stable identifiers such as their UniProtKB or RefSeq accession number.
+2 | Unique identifier for interactor B.
+3 | Alternative identifier for interactor A, for example the official gene symbol as defined by a recognised nomenclature committee. Representation as databaseName:identifier. Multiple identifiers separated by "|".
+4 | Alternative identifier for interactor B.
+5 | Aliases for A, separated by "|". Representation as databaseName:identifier. Multiple identifiers separated by "|".
+6 | Aliases for B.
 
 ##### Utiliser le PMID de la publication pour récuperer les lignes MITAB des interactions rapportées dans l'étude.
 Une librairie pratique pour manipuler des requêtes HTTP est [requests](https://requests.readthedocs.io/en/master/), eg:
@@ -60,7 +60,7 @@ ans = httpReq.text
 ##### Quelles techniques experimentales mesurent les interactions rapportées dans cette publication?
 
 ```
-
+Pull down et two hybrid.
 ```
 
 #### Extraction des deux sous-jeux d'interactions
@@ -113,6 +113,7 @@ print(f"Nombre total d'interactions {total}, EBV-EBV {len(EBV_EBV_mitab)}")
 
 ##### Que fait la fonction `mitabReader` ?
 ```
+Permet de parser la requete de la base de donnees, en particulier ca permet de parser toutes les lignes correspondant a une interaction (entre 2 proteines ayant des identifiants uniprot) et ensuite il enleve les 2 premiers champs et retourne le reste de la ligne.
 ```
 
 ##### Après avoir réparé ce code veuillez
@@ -143,7 +144,7 @@ A l'aide des données MITAB et de la librarie [networkx](https://networkx.github
 
 - les arêtes relient deux protéines en interaction
 
-![Graphique](ebv_ebv_network_uniprot.png)
+![Graphique](EBV_EBV_network.jpeg)
 
 ##### Décrivez brièvement ce réseau
 
